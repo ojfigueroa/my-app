@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PM2_2026_2",
-    "slug": "PM2_2026_2",
+    "name": "PrototypeBlank",
+    "slug": "tarea1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,17 +13,33 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anthony78954563.PrototypeBlank",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "package": "com.anthony78954563.PrototypeBlank"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1aecc2aa-86d9-4866-b3ea-a0bc5e9b50d7"
+    },
+    "owner": "ojfigueroa",
+    "extra": {
+      "eas": {
+        "projectId": "1aecc2aa-86d9-4866-b3ea-a0bc5e9b50d7"
+      }
     }
   }
 }

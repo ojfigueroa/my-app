@@ -2,13 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/pantallas/Login'; //Instanciando pantalla login
 import Inicio from './src/pantallas/Inicio'; //Instanciando pantalla inicio
-import CrearCuenta from './src/pantallas/CrearCuenta'; //Instanciando cre
+import crearcuenta from './src/pantallas/crearcuenta'; //Instanciando cre
 import AppNavigator from './src/componentes/AppNavigator';
-import NewPassword from './src/pantallas/NewPassword'; //Instanciando newpassword
+import newpassword from './src/pantallas/newpassword'; //Instanciando newpassword
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
+
+
 
 export default function App() {
   return (
@@ -19,8 +21,8 @@ export default function App() {
           component={Login}
           options={{title: 'Login'}}
         />
-        <Stack.Screen name="NewPassword" component={NewPassword} />
-        <Stack.Screen name="CrearCuenta" component={CrearCuenta} />
+        <Stack.Screen name="newpassword" component={newpassword} />
+        <Stack.Screen name="crearcuenta" component={crearcuenta} />
         <Stack.Screen name="Inicio" component={Inicio} />
       </Stack.Navigator>
     </NavigationContainer>
