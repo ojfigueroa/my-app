@@ -102,7 +102,7 @@ verificarConexionBD();
       {/* Ícono Crear Cuenta arriba a la derecha */}
       <TouchableOpacity
         style={styles.btnCrear}
-        onPress={() => navigation.navigate('crearcuenta')}>
+        onPress={() => navigation.navigate('CrearCuenta')}>
         <View style={styles.iconoCrear}>
           <FontAwesome name="user" size={16} color="#339900" />
           <FontAwesome name="plus" size={10} color="#339900" style={styles.plus} />
@@ -133,7 +133,7 @@ verificarConexionBD();
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('newpassword')}>
+      <TouchableOpacity onPress={() => navigation.navigate('NewPassword')}>
         <Text style={styles.olvidaste}>¿Olvidaste tu Contraseña?</Text>
       </TouchableOpacity>
 
