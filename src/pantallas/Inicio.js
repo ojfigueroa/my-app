@@ -81,7 +81,7 @@ export default function App() {
     let cat = '';
     if (resultado < 18.5) cat = 'Bajo peso';
     else if (resultado < 24.9) cat = 'Peso normal';
-    else if (resultado < 39.9) cat = 'Sobrepeso';
+    else if (resultado < 29.9) cat = 'Sobrepeso';
     else cat = 'Obesidad';
 
     setImc(resultado.toFixed(2));
