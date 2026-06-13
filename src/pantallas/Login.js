@@ -43,16 +43,16 @@ datos: null
   const entrarapple = () => mostrarAlerta('Apple',    'Función próximamente disponible', 'gris');
 
   const verificaruser = () => {
-    if (!usuario || !clave) {
-      mostrarAlerta('Campos vacíos', 'Por favor ingresa usuario y clave', 'error');
-      return;
-    }
-    if (usuario === 'admin' && clave === 'admin') {
+//    if (!usuario || !clave) {
+//      mostrarAlerta('Campos vacíos', 'Por favor ingresa usuario y clave', 'error');
+//      return;
+//    }
+   if (usuario === '' && clave === '') {
       mostrarAlerta('¡Bienvenido!', 'Ingreso exitoso', 'exito');
     } else {
-      mostrarAlerta('Acceso denegado', 'Usuario o contraseña incorrectos', 'error');
+//      mostrarAlerta('Acceso denegado', 'Usuario o contraseña incorrectos', 'error');
     }
-  };
+};
 
 
 //metodo oara verificar conexion a la base de datos
