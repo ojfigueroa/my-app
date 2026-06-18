@@ -4,7 +4,6 @@ import Login from './src/pantallas/Login'; //Instanciando pantalla login
 import Inicio from './src/pantallas/Inicio'; //Instanciando pantalla inicio
 import CrearCuenta from './src/pantallas/CrearCuenta'; //Instanciando cre
 import AppNavigator from './src/componentes/AppNavigator';
-import Calculadora from './src/pantallas/Calculadora'; //Instanciando calculadora
 import NewPassword from './src/pantallas/NewPassword'; //Instanciando newpassword
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "PrototypeBlank",
+    "name": "Calculator",
     "slug": "tarea1",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,6 +20,7 @@
       }
     },
     "android": {
+      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -29,6 +30,16 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
     "runtimeVersion": {
       "policy": "appVersion"
     },

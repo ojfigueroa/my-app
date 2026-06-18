@@ -7,19 +7,18 @@ import CustomAlert from '../componentes/CustomAlert';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
-import{ API_URLS } from '../config/config';
-
+import { API_URLS } from '../config/config';
 
 const Login = () => {
   const navigation = useNavigation();
   const [usuario, setUsuario] = useState('');
   const [clave, setClave] = useState('');
 
-const [conexionDB, setConexionDB] = useState({
-estado: "verificando",
-mensaje: "Verificando conexión...",
-datos: null
-});
+  const [conexionDB, setConexionDB] = useState({
+    estado: "verificando",
+    mensaje: "Verificando conexión...",
+    datos: null
+  });
 
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertTitulo, setAlertTitulo] = useState('');
@@ -33,7 +32,7 @@ datos: null
     setAlertVisible(true);
   };
 
-  const handleAlertConfirm = () => {
+  const handleAlertConfirm = async () => {
     setAlertVisible(false);
     if (alertTipo === 'exito') navigation.navigate('Inicio');
   };
@@ -42,50 +41,75 @@ datos: null
   const entrarG     = () => mostrarAlerta('Google',   'Función próximamente disponible', 'rojo');
   const entrarapple = () => mostrarAlerta('Apple',    'Función próximamente disponible', 'gris');
 
-  const verificaruser = () => {
-//    if (!usuario || !clave) {
-//      mostrarAlerta('Campos vacíos', 'Por favor ingresa usuario y clave', 'error');
-//      return;
-//    }
-   if (usuario === '' && clave === '') {
-      mostrarAlerta('¡Bienvenido!', 'Ingreso exitoso', 'exito');
-    } else {
-//      mostrarAlerta('Acceso denegado', 'Usuario o contraseña incorrectos', 'error');
+
+  const verificaruser = async () => {
+    if (!usuario || !clave) {
+      mostrarAlerta('Campos vacíos', 'Por favor ingresa usuario y clave', 'error');
+      return;
     }
-};
 
+    try {
+      const response = await fetch(API_URLS.LOGIN, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      body: JSON.stringify({ usuario_nombre: usuario, usuario_clave: clave }),
+      });
 
-//metodo oara verificar conexion a la base de datos
-const verificarConexionBD = async () => {
-  setConexionDB({ estado: "verificando", mensaje: "Verificando conexión...", datos: null });
+      const textoRespuesta = await response.text();
+      console.log("Respuesta del servidor:", textoRespuesta);
 
-try {
-const response = await fetch(API_URLS.CHECKBD, {
-method: 'GET',
-headers: {'Accept': 'application/json'},
-});
+      if (!response.ok) {
+        throw new Error(`Error http: ${response.status}`);
+      }
 
-const textoRespuesta = await response.text();
-console.log( textoRespuesta);
-if (!response.ok) {
-  throw new Error(`Error http: ${response.status}`);
-}
-const data = JSON.parse(textoRespuesta);
-if (data.conectado){
-setConexionDB({ estado: "conectado", mensaje: "Conexión exitosa", datos: data });
-//mostrarAlerta('¡Bienvenido!', 'Ingreso exitoso', 'exito');
-mostrarAlerta("Conexión a la base de datos exitosa", "", 'exitos');
+      const data = JSON.parse(textoRespuesta);
 
-}
+      if (data.exito) {
+        mostrarAlerta('¡Bienvenido!', 'Ingreso exitoso', 'exito');
+      } else {
+        mostrarAlerta('Acceso denegado', data.mensaje || 'Usuario o contraseña incorrectos', 'error');
+      }
 
-}catch (error) {
-console.error("Error al verificar conexión:", error.message);
-}
-}
+    } catch (error) {
+      console.error("Error al verificar usuario:", error.message);
+      mostrarAlerta('Error de conexión', 'No se pudo conectar al servidor', 'error');
+    }
+  };
 
-useEffect(() => {
-verificarConexionBD();
-}, []);
+  const verificarConexionBD = async () => {
+    setConexionDB({ estado: "verificando", mensaje: "Verificando conexión...", datos: null });
+
+    try {
+      const response = await fetch(API_URLS.CHECKBD, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+      });
+
+      const textoRespuesta = await response.text();
+      console.log(textoRespuesta);
+
+      if (!response.ok) {
+        throw new Error(`Error http: ${response.status}`);
+      }
+
+      const data = JSON.parse(textoRespuesta);
+
+      if (data.conectado) {
+        setConexionDB({ estado: "conectado", mensaje: "Conexión exitosa", datos: data });
+        mostrarAlerta("Conexión a la base de datos exitosa", "", 'info');
+      }
+
+    } catch (error) {
+      console.error("Error al verificar conexión:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    verificarConexionBD();
+  }, []);
 
   return (
     <View style={styles.root}>
@@ -99,7 +123,6 @@ verificarConexionBD();
         onConfirm={handleAlertConfirm}
       />
 
-      {/* Ícono Crear Cuenta arriba a la derecha */}
       <TouchableOpacity
         style={styles.btnCrear}
         onPress={() => navigation.navigate('CrearCuenta')}>
@@ -119,7 +142,6 @@ verificarConexionBD();
 
       <Boton text="Entrar" ColorFondo='#0000ff' onPress={verificaruser} />
 
-      {/* Íconos sociales */}
       <Text style={styles.oText}>— Entrar con —</Text>
       <View style={styles.socialRow}>
         <TouchableOpacity style={[styles.socialBtn, { backgroundColor: '#e7eaf4' }]} onPress={entrarfb}>
@@ -149,7 +171,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     paddingTop: 50,
   },
-  // Botón crear cuenta arriba derecha
   btnCrear: {
     position: 'absolute',
     top: 10,
