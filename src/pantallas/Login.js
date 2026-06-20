@@ -8,6 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { API_URLS } from '../config/config';
+import BitacoraService from'../componentes/Bitacora';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -68,7 +69,13 @@ const Login = () => {
       const data = JSON.parse(textoRespuesta);
 
       if (data.exito) {
+  await BitacoraService.registrarEvento({
+          accion: "Login",
+          estado_operacion: "EXITOSO",
+          mensaje_error: null
+        });
         mostrarAlerta('¡Bienvenido!', 'Ingreso exitoso', 'exito');
+      
       } else {
         mostrarAlerta('Acceso denegado', data.mensaje || 'Usuario o contraseña incorrectos', 'error');
       }
@@ -100,6 +107,9 @@ const Login = () => {
       if (data.conectado) {
         setConexionDB({ estado: "conectado", mensaje: "Conexión exitosa", datos: data });
         mostrarAlerta("Conexión a la base de datos exitosa", "", 'info');
+        const resultDispo = await BitacoraService.registrarDispositivo();
+        //Llamar a Guardar Evento en Bitacora
+
       }
 
     } catch (error) {
